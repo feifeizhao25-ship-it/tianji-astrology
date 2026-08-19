@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "见己",
+    "slug": "jianji-cn",
+    "version": "4.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "resizeMode": "contain",
+      "image": "./assets/splash-icon.png"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.tianji.jianji",
+      "infoPlist": {
+        "NSLocationWhenInUseUsageDescription": "用于计算您的精准出生时间对应的星盘位置"
+      }
+    },
+    "android": {
+      "package": "com.tianji.jianji",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundImage": "./assets/android-icon-background.png"
+      }
+    },
+    "web": {
+      "bundler": "metro",
+      "output": "static",
+      "favicon": "./assets/favicon.png"
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/PROJECT_ID_PLACEHOLDER"
+    },
+    "extra": {
+      "bffMode": "cn",
+      "apiBaseUrl": "http://localhost:3000",
+      "eas": {
+        "projectId": ""
+      }
+    },
+    "plugins": ["expo-router"]
+  }
+}
