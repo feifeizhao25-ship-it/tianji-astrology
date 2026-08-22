@@ -9,7 +9,11 @@ export default defineConfig({
   },
   resolve: {
     alias: {
-      'react-native$': 'react-native-web',
-    }
-  }
+      'react-native': 'react-native-web',
+    },
+  },
+  optimizeDeps: {
+    exclude: ['react-native'],
+    include: ['react-native-web'],
+  },
 });

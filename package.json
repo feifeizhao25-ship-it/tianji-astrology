@@ -1,7 +1,7 @@
 {
   "name": "jianji-tianji",
   "version": "4.1.0",
-  "main": "App.tsx",
+  "main": "index.ts",
   "scripts": {
     "start": "expo start",
     "android": "expo start --android",

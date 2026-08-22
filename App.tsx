@@ -4,12 +4,21 @@
  */
 import React, { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { 
-  View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  TextInput, FlatList, KeyboardAvoidingView, Platform,
-  ActivityIndicator, Dimensions, Image
+import {
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  TextInput,
+  FlatList,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+  Dimensions,
+  Image,
 } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Constants } from 'expo-constants';
 
 const IS_CN = true; // CN版"见己"
@@ -18,7 +27,7 @@ const { width: W } = Dimensions.get('window');
 // 主题
 const T = {
   bg: '#faf6f0',
-  card: '#ffffff', 
+  card: '#ffffff',
   text: '#2c1810',
   dim: '#8b7355',
   accent: '#c4956a',
@@ -78,7 +87,9 @@ function HomeScreen() {
           >
             <Text style={s.engineIcon}>{eng.icon}</Text>
             <Text style={s.engineName}>{eng.name}</Text>
-            <Text style={s.engineDesc} numberOfLines={2}>{eng.desc}</Text>
+            <Text style={s.engineDesc} numberOfLines={2}>
+              {eng.desc}
+            </Text>
             {eng.locked && <Text style={s.lock}>🔒</Text>}
           </TouchableOpacity>
         ))}
@@ -103,7 +114,10 @@ function HomeScreen() {
 // ─── 对话页 ───
 function ChatScreen() {
   const [messages, setMessages] = useState([
-    { role: 'ai', text: '你好，我是你的自我探索伙伴 🌿\n在这里你可以聊任何话题。我不预测未来，但会帮你更好地认识自己。' }
+    {
+      role: 'ai',
+      text: '你好，我是你的自我探索伙伴 🌿\n在这里你可以聊任何话题。我不预测未来，但会帮你更好地认识自己。',
+    },
   ]);
   const [input, setInput] = useState('');
 
@@ -115,15 +129,27 @@ function ChatScreen() {
         contentContainerStyle={{ padding: 16 }}
         renderItem={({ item }) => (
           <View style={[s.msgBubble, item.role === 'ai' ? s.msgAI : s.msgUser]}>
-            <Text style={{ color: item.role === 'ai' ? T.text : '#fff', fontSize: 15, lineHeight: 22 }}>
+            <Text
+              style={{ color: item.role === 'ai' ? T.text : '#fff', fontSize: 15, lineHeight: 22 }}
+            >
               {item.text}
             </Text>
           </View>
         )}
       />
       <View style={s.suggestRow}>
-        {['我是什么样的人？', '我今天很烦', '怎么改善沟通？'].map(q => (
-          <TouchableOpacity key={q} style={s.suggestChip} onPress={() => setMessages(m => [...m, { role: 'user', text: q }, { role: 'ai', text: '我理解你的感受。让我们一起探索这个问题——能具体说说吗？' }])}>
+        {['我是什么样的人？', '我今天很烦', '怎么改善沟通？'].map((q) => (
+          <TouchableOpacity
+            key={q}
+            style={s.suggestChip}
+            onPress={() =>
+              setMessages((m) => [
+                ...m,
+                { role: 'user', text: q },
+                { role: 'ai', text: '我理解你的感受。让我们一起探索这个问题——能具体说说吗？' },
+              ])
+            }
+          >
             <Text style={s.suggestText}>{q}</Text>
           </TouchableOpacity>
         ))}
@@ -137,7 +163,19 @@ function ChatScreen() {
           placeholderTextColor={T.dim}
           multiline
         />
-        <TouchableOpacity style={s.sendBtn} onPress={() => { if(input.trim()){ setMessages(m => [...m, {role:'user',text:input},{role:'ai',text:'谢谢你的分享。这确实值得深入探讨。'}]); setInput(''); } }}>
+        <TouchableOpacity
+          style={s.sendBtn}
+          onPress={() => {
+            if (input.trim()) {
+              setMessages((m) => [
+                ...m,
+                { role: 'user', text: input },
+                { role: 'ai', text: '谢谢你的分享。这确实值得深入探讨。' },
+              ]);
+              setInput('');
+            }
+          }}
+        >
           <Text style={{ color: '#fff', fontSize: 20, fontWeight: 'bold' }}>↑</Text>
         </TouchableOpacity>
       </View>
@@ -147,7 +185,7 @@ function ChatScreen() {
 
 // ─── 日记页 ───
 function JournalScreen() {
-  const moods = ['😄 开心','😌 平静','😐 一般','😔 低落','😢 难过','😰 焦虑'];
+  const moods = ['😄 开心', '😌 平静', '😐 一般', '😔 低落', '😢 难过', '😰 焦虑'];
   const [selected, setSelected] = useState('');
   const [entry, setEntry] = useState('');
 
@@ -157,7 +195,7 @@ function JournalScreen() {
         <Text style={s.cardLabel}>2026年6月19日 星期五</Text>
         <Text style={[s.cardLabel, { marginTop: 16 }]}>今天的心情</Text>
         <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 8 }}>
-          {moods.map(m => (
+          {moods.map((m) => (
             <TouchableOpacity
               key={m}
               style={[s.moodBtn, selected === m && { backgroundColor: T.accent }]}
@@ -195,12 +233,20 @@ function CompatScreen() {
       <View style={s.card}>
         <Text style={s.cardLabel}>👤 人物一</Text>
         <TextInput style={s.compatInput} placeholder="姓名" placeholderTextColor={T.dim} />
-        <TextInput style={s.compatInput} placeholder="出生日期 (YYYY-MM-DD)" placeholderTextColor={T.dim} />
+        <TextInput
+          style={s.compatInput}
+          placeholder="出生日期 (YYYY-MM-DD)"
+          placeholderTextColor={T.dim}
+        />
       </View>
       <View style={s.card}>
         <Text style={s.cardLabel}>👤 人物二</Text>
         <TextInput style={s.compatInput} placeholder="姓名" placeholderTextColor={T.dim} />
-        <TextInput style={s.compatInput} placeholder="出生日期 (YYYY-MM-DD)" placeholderTextColor={T.dim} />
+        <TextInput
+          style={s.compatInput}
+          placeholder="出生日期 (YYYY-MM-DD)"
+          placeholderTextColor={T.dim}
+        />
       </View>
       <TouchableOpacity style={[s.saveBtn, { marginHorizontal: 40 }]}>
         <Text style={{ color: '#fff', fontSize: 16, fontWeight: 'bold' }}>🔍 开始分析</Text>
@@ -213,9 +259,13 @@ function CompatScreen() {
 // ─── 我的 ───
 function ProfileScreen() {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: T.bg }}>
+    <View
+      style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: T.bg }}
+    >
       <Text style={{ fontSize: 60, marginBottom: 16 }}>🧘</Text>
-      <Text style={{ fontSize: 22, fontWeight: 'bold', color: T.text, marginBottom: 8 }}>探索者</Text>
+      <Text style={{ fontSize: 22, fontWeight: 'bold', color: T.text, marginBottom: 8 }}>
+        探索者
+      </Text>
       <Text style={{ fontSize: 14, color: T.dim, marginBottom: 24 }}>会员等级: Premium</Text>
       <Text style={{ fontSize: 14, color: T.dim, textAlign: 'center' }}>
         见己 V4.1{'\n'}认识自己，是改变的开始
@@ -238,7 +288,7 @@ export default function App() {
   const [tab, setTab] = useState<TabKey>('home');
 
   return (
-    <>
+    <SafeAreaProvider>
       <StatusBar style="dark" />
       <SafeAreaView style={{ flex: 1, backgroundColor: T.bg }}>
         <View style={{ flex: 1 }}>
@@ -250,7 +300,7 @@ export default function App() {
         </View>
         {/* 底部Tab Bar */}
         <View style={s.tabBar}>
-          {TABS.map(t => (
+          {TABS.map((t) => (
             <TouchableOpacity key={t.key} style={s.tabItem} onPress={() => setTab(t.key)}>
               <Text style={{ fontSize: 22, opacity: tab === t.key ? 1 : 0.4 }}>{t.icon}</Text>
               <Text style={[s.tabLabel, { color: tab === t.key ? T.accent : T.dim }]}>
@@ -260,7 +310,7 @@ export default function App() {
           ))}
         </View>
       </SafeAreaView>
-    </>
+    </SafeAreaProvider>
   );
 }
 
@@ -269,35 +319,149 @@ const s = StyleSheet.create({
   header: { alignItems: 'center', paddingTop: 20, paddingBottom: 10 },
   appName: { fontSize: 32, fontWeight: 'bold', color: T.accent },
   tagline: { fontSize: 14, color: T.dim, marginTop: 4 },
-  card: { backgroundColor: T.card, marginHorizontal: 16, marginBottom: 12, padding: 20, borderRadius: 16, borderWidth: 1, borderColor: T.accentL },
+  card: {
+    backgroundColor: T.card,
+    marginHorizontal: 16,
+    marginBottom: 12,
+    padding: 20,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: T.accentL,
+  },
   cardLabel: { fontSize: 16, fontWeight: '600', color: T.accent, marginBottom: 8 },
   cardText: { fontSize: 15, lineHeight: 24, color: T.text },
   dailyTags: { flexDirection: 'row', marginTop: 12 },
-  tag: { fontSize: 13, color: T.accent, marginRight: 12, paddingVertical: 4, paddingHorizontal: 10, backgroundColor: T.accentL, borderRadius: 12 },
-  sectionTitle: { fontSize: 20, fontWeight: 'bold', color: T.text, marginHorizontal: 16, marginVertical: 12 },
+  tag: {
+    fontSize: 13,
+    color: T.accent,
+    marginRight: 12,
+    paddingVertical: 4,
+    paddingHorizontal: 10,
+    backgroundColor: T.accentL,
+    borderRadius: 12,
+  },
+  sectionTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    color: T.text,
+    marginHorizontal: 16,
+    marginVertical: 12,
+  },
   engineGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8 },
-  engineCard: { width: (W - 48) / 2, margin: 8, padding: 16, borderRadius: 16, backgroundColor: T.card, minHeight: 120 },
+  engineCard: {
+    width: (W - 48) / 2,
+    margin: 8,
+    padding: 16,
+    borderRadius: 16,
+    backgroundColor: T.card,
+    minHeight: 120,
+  },
   engineIcon: { fontSize: 32, marginBottom: 8 },
   engineName: { fontSize: 16, fontWeight: 'bold', color: T.text, marginBottom: 4 },
   engineDesc: { fontSize: 12, color: T.dim, lineHeight: 16 },
   lock: { position: 'absolute', top: 12, right: 12, fontSize: 16 },
   memberFeature: { fontSize: 13, color: T.text, marginTop: 4 },
-  upgradeBtn: { backgroundColor: T.accent, paddingHorizontal: 20, paddingVertical: 10, borderRadius: 20, marginTop: 12, alignSelf: 'center' },
+  upgradeBtn: {
+    backgroundColor: T.accent,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 20,
+    marginTop: 12,
+    alignSelf: 'center',
+  },
   upgradeText: { color: '#fff', fontSize: 14, fontWeight: '600' },
-  msgBubble: { maxWidth: '80%', paddingHorizontal: 14, paddingVertical: 10, borderRadius: 18, marginBottom: 12 },
+  msgBubble: {
+    maxWidth: '80%',
+    paddingHorizontal: 14,
+    paddingVertical: 10,
+    borderRadius: 18,
+    marginBottom: 12,
+  },
   msgAI: { backgroundColor: T.card, marginRight: '20%' },
   msgUser: { backgroundColor: T.accent, marginLeft: '20%' },
   suggestRow: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 16, paddingBottom: 8 },
-  suggestChip: { paddingHorizontal: 12, paddingVertical: 6, borderRadius: 16, borderWidth: 1, borderColor: T.accent, marginHorizontal: 4, marginBottom: 8 },
+  suggestChip: {
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 16,
+    borderWidth: 1,
+    borderColor: T.accent,
+    marginHorizontal: 4,
+    marginBottom: 8,
+  },
   suggestText: { fontSize: 12, color: T.accent },
-  inputBar: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: 12, paddingVertical: 8, backgroundColor: T.card, borderTopWidth: 1, borderColor: T.accentL },
-  input: { flex: 1, fontSize: 15, maxHeight: 80, paddingHorizontal: 12, paddingVertical: 8, color: T.text },
-  sendBtn: { width: 36, height: 36, borderRadius: 18, backgroundColor: T.accent, justifyContent: 'center', alignItems: 'center', marginLeft: 8 },
-  moodBtn: { alignItems: 'center', paddingHorizontal: 10, paddingVertical: 8, borderRadius: 12, borderWidth: 1.5, borderColor: T.accentL, marginRight: 8, marginBottom: 8 },
-  textArea: { minHeight: 100, borderRadius: 12, borderWidth: 1, borderColor: T.accentL, padding: 12, fontSize: 15, marginTop: 4, backgroundColor: T.bg, color: T.text },
-  saveBtn: { backgroundColor: T.accent, paddingHorizontal: 24, paddingVertical: 12, borderRadius: 20, alignSelf: 'center', marginTop: 16 },
-  compatInput: { height: 44, borderRadius: 10, borderWidth: 1, borderColor: T.accentL, paddingHorizontal: 12, fontSize: 15, marginBottom: 8, color: T.text },
-  tabBar: { flexDirection: 'row', backgroundColor: T.card, borderTopWidth: 1, borderTopColor: T.accentL, paddingBottom: 4 },
+  inputBar: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    backgroundColor: T.card,
+    borderTopWidth: 1,
+    borderColor: T.accentL,
+  },
+  input: {
+    flex: 1,
+    fontSize: 15,
+    maxHeight: 80,
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    color: T.text,
+  },
+  sendBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    backgroundColor: T.accent,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
+  moodBtn: {
+    alignItems: 'center',
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    borderRadius: 12,
+    borderWidth: 1.5,
+    borderColor: T.accentL,
+    marginRight: 8,
+    marginBottom: 8,
+  },
+  textArea: {
+    minHeight: 100,
+    borderRadius: 12,
+    borderWidth: 1,
+    borderColor: T.accentL,
+    padding: 12,
+    fontSize: 15,
+    marginTop: 4,
+    backgroundColor: T.bg,
+    color: T.text,
+  },
+  saveBtn: {
+    backgroundColor: T.accent,
+    paddingHorizontal: 24,
+    paddingVertical: 12,
+    borderRadius: 20,
+    alignSelf: 'center',
+    marginTop: 16,
+  },
+  compatInput: {
+    height: 44,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: T.accentL,
+    paddingHorizontal: 12,
+    fontSize: 15,
+    marginBottom: 8,
+    color: T.text,
+  },
+  tabBar: {
+    flexDirection: 'row',
+    backgroundColor: T.card,
+    borderTopWidth: 1,
+    borderTopColor: T.accentL,
+    paddingBottom: 4,
+  },
   tabItem: { flex: 1, alignItems: 'center', paddingVertical: 8 },
   tabLabel: { fontSize: 11, marginTop: 2 },
 });
