@@ -6,7 +6,9 @@
     "start": "expo start",
     "android": "expo start --android",
     "ios": "expo start --ios",
-    "web": "expo start --web"
+    "web": "expo start --web",
+    "build:web": "vite build",
+    "typecheck": "tsc --noEmit -p tsconfig.web.json"
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",

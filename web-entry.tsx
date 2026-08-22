@@ -1,8 +1,7 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
-import { AppRegistry } from 'react-native';
-import App from './App';
+import WebApp from './WebApp';
 
 // 渲染React Native Web
 const root = createRoot(document.getElementById('app')!);
-root.render(React.createElement(App));
+root.render(React.createElement(WebApp));
