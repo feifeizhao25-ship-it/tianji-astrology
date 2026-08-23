@@ -9,9 +9,9 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
+- [Venus Retrograde 2026: Dates, Meanings, and How to Thrive in Scorpio and Libra](https://tianji-astrology.com/blog/venus-retrograde-2026-guide.html)
 - [Uranus in Gemini 2026: The Seven-Year Transit That Rewires Communication](https://tianji-astrology.com/blog/uranus-in-gemini-2026-guide.html)
 - [Zodiacal Releasing: Ancient Timing Technique](https://tianji-astrology.com/blog/zodiacal-releasing.html)
 - [Zodiac Stress Relief: How Each Sign Handles Stress & Best Relaxation Techniques](https://tianji-astrology.com/blog/zodiac-stress-relief.html)
 - [Zodiac Home Decor: Interior Design and Styling Tips for Each Sign](https://tianji-astrology.com/blog/zodiac-home-decor.html)
-- [Zodiac Gift Guide: Best Gift Ideas for Every Zodiac Sign](https://tianji-astrology.com/blog/zodiac-gift-guide.html)
 <!-- BLOG:END -->
