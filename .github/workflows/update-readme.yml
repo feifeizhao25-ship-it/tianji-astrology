@@ -15,6 +15,8 @@ jobs:
       - run: python .github/scripts/sync_readme.py
         env:
           SITEMAP_URL: "https://tianji-astrology.com/sitemap.xml"
+          ORIGIN_DOMAIN: "tianji-astrology.com"
+          ORIGIN_IP: "54.218.239.203"
       - run: |
           git config user.name "blog-sync-bot"
           git config user.email "actions@github.com"
