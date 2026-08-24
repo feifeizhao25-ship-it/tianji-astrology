@@ -9,9 +9,9 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Venus Retrograde 2026: Dates, Meanings, and How to Thrive in Scorpio and Libra](https://tianji-astrology.com/blog/venus-retrograde-2026-guide.html)
-- [Uranus in Gemini 2026: The Seven-Year Transit That Rewires Communication](https://tianji-astrology.com/blog/uranus-in-gemini-2026-guide.html)
-- [Zodiacal Releasing: Ancient Timing Technique](https://tianji-astrology.com/blog/zodiacal-releasing.html)
-- [Zodiac Stress Relief: How Each Sign Handles Stress & Best Relaxation Techniques](https://tianji-astrology.com/blog/zodiac-stress-relief.html)
-- [Zodiac Home Decor: Interior Design and Styling Tips for Each Sign](https://tianji-astrology.com/blog/zodiac-home-decor.html)
+- [Wind Energy Innovations: Latest Turbine Technology in 2026 - New Energy](https://tianji-astrology.com/newenergy/blog/wind-energy-innovations)
+- [Solid-State Batteries: The Next Energy Revolution](https://tianji-astrology.com/newenergy/blog/solid-state-batteries-next-revolution)
+- [Solar Panel ROI Calculator: How Much Can You Save in 2026?](https://tianji-astrology.com/newenergy/blog/solar-panel-roi-calculator-2026)
+- [Solar Cell Efficiency Breakthroughs in 2026 - New Energy](https://tianji-astrology.com/newenergy/blog/solar-efficiency-breakthroughs-2026)
+- [5 Ways Smart Grid Technology is Revolutionizing Energy Distribution](https://tianji-astrology.com/newenergy/blog/smart-grid-technology)
 <!-- BLOG:END -->
