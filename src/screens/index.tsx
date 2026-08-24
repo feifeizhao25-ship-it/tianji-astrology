@@ -5,11 +5,26 @@
  */
 import React, { useState, useCallback } from 'react';
 import {
-  View, Text, ScrollView, TouchableOpacity, StyleSheet,
-  RefreshControl, Alert, Dimensions, Linking,
+  View,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  StyleSheet,
+  RefreshControl,
+  Alert,
+  Dimensions,
+  Linking,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { api, ENGINES, IS_CN, MEMBERSHIP, EngineType, UserProfile, EngineResult } from '../services/api';
+import {
+  api,
+  ENGINES,
+  IS_CN,
+  MEMBERSHIP,
+  EngineType,
+  UserProfile,
+  EngineResult,
+} from '../services/api';
 
 const { width: SCREEN_W } = Dimensions.get('window');
 
@@ -29,41 +44,48 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onEngineSelect }) 
   const theme = IS_CN ? cnTheme : glTheme;
 
   const loadDaily = useCallback(async () => {
+    setLoading(true);
     try {
       const result = await api.getDailyInsight(user.id);
       setDailyInsight(result.insight);
     } catch {
-      setDailyInsight(IS_CN
-        ? `${user.name}，今天给自己一点耐心，你最近压力不小。`
-        : `${user.name}, give yourself some patience today. You've been under pressure.`);
+      setDailyInsight(
+        IS_CN
+          ? '今日内容暂时无法读取，未生成替代结论。下拉可重试。'
+          : "Today's insight is unavailable. No substitute reading was generated. Pull to retry."
+      );
+    } finally {
+      setLoading(false);
     }
-  }, [user.id, user.name]);
+  }, [user.id]);
 
-  React.useEffect(() => { loadDaily(); }, []);
+  React.useEffect(() => {
+    loadDaily();
+  }, []);
 
   return (
     <SafeAreaView style={[styles.container, { backgroundColor: theme.bg }]}>
       <ScrollView
-        refreshControl={<RefreshControl refreshing={loading} onRefresh={loadDaily} tintColor={theme.accent} />}
+        refreshControl={
+          <RefreshControl refreshing={loading} onRefresh={loadDaily} tintColor={theme.accent} />
+        }
       >
         {/* Header */}
         <View style={styles.header}>
-          <Text style={[styles.appName, { color: theme.accent }]}>
-            {IS_CN ? '见己' : 'TianJi'}
-          </Text>
+          <Text style={[styles.appName, { color: theme.accent }]}>{IS_CN ? '见己' : 'TianJi'}</Text>
           <Text style={[styles.tagline, { color: theme.textDim }]}>
             {IS_CN ? '认识自己，是改变的开始' : 'Know thyself, change thy stars'}
           </Text>
         </View>
 
         {/* 每日卡片 */}
-        <View style={[styles.dailyCard, { backgroundColor: theme.cardBg, borderColor: theme.accent }]}>
+        <View
+          style={[styles.dailyCard, { backgroundColor: theme.cardBg, borderColor: theme.accent }]}
+        >
           <Text style={[styles.dailyLabel, { color: theme.accent }]}>
             {IS_CN ? '🔮 今日能量提示' : '🔮 Daily Guidance'}
           </Text>
-          <Text style={[styles.dailyText, { color: theme.text }]}>
-            {dailyInsight || '...'}
-          </Text>
+          <Text style={[styles.dailyText, { color: theme.text }]}>{dailyInsight || '...'}</Text>
         </View>
 
         {/* 引擎选择 */}
@@ -77,11 +99,20 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onEngineSelect }) 
             return (
               <TouchableOpacity
                 key={engine.id}
-                style={[styles.engineCard, { backgroundColor: theme.cardBg, opacity: isLocked ? 0.6 : 1 }]}
-                onPress={() => !isLocked ? onEngineSelect(engine.id) : Alert.alert(
-                  IS_CN ? '升级解锁' : 'Upgrade to Unlock',
-                  IS_CN ? `升级高级版解锁${engine.name}` : `Upgrade to Premium for ${engine.name}`
-                )}
+                style={[
+                  styles.engineCard,
+                  { backgroundColor: theme.cardBg, opacity: isLocked ? 0.6 : 1 },
+                ]}
+                onPress={() =>
+                  !isLocked
+                    ? onEngineSelect(engine.id)
+                    : Alert.alert(
+                        IS_CN ? '升级解锁' : 'Upgrade to Unlock',
+                        IS_CN
+                          ? `升级高级版解锁${engine.name}`
+                          : `Upgrade to Premium for ${engine.name}`
+                      )
+                }
               >
                 <Text style={styles.engineIcon}>{engine.icon}</Text>
                 <Text style={[styles.engineName, { color: theme.text }]}>{engine.name}</Text>
@@ -100,12 +131,16 @@ export const HomeScreen: React.FC<HomeScreenProps> = ({ user, onEngineSelect }) 
             {MEMBERSHIP[user.memberLevel].name}
           </Text>
           <Text style={[styles.memberDaily, { color: theme.textDim }]}>
-            {IS_CN ? `今日剩余: ${MEMBERSHIP[user.memberLevel].daily === Infinity ? '无限' : MEMBERSHIP[user.memberLevel].daily + '次'}` : `Today: ${MEMBERSHIP[user.memberLevel].daily === Infinity ? 'Unlimited' : MEMBERSHIP[user.memberLevel].daily + ' left'}`}
+            {IS_CN
+              ? `今日剩余: ${MEMBERSHIP[user.memberLevel].daily === Infinity ? '无限' : MEMBERSHIP[user.memberLevel].daily + '次'}`
+              : `Today: ${MEMBERSHIP[user.memberLevel].daily === Infinity ? 'Unlimited' : MEMBERSHIP[user.memberLevel].daily + ' left'}`}
           </Text>
           {user.memberLevel !== 'vip' && (
             <TouchableOpacity style={[styles.upgradeBtn, { backgroundColor: theme.accent }]}>
               <Text style={styles.upgradeText}>
-                {IS_CN ? `升级VIP ¥${user.memberLevel === 'free' ? '98' : '98'}/月` : 'Go VIP $14.99/mo'}
+                {IS_CN
+                  ? `升级VIP ¥${user.memberLevel === 'free' ? '98' : '98'}/月`
+                  : 'Go VIP $14.99/mo'}
               </Text>
             </TouchableOpacity>
           )}
@@ -132,7 +167,7 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
   const [expanded, setExpanded] = useState(false);
 
   const theme = IS_CN ? cnTheme : glTheme;
-  const engineInfo = ENGINES.find(e => e.id === engine);
+  const engineInfo = ENGINES.find((e) => e.id === engine);
 
   React.useEffect(() => {
     (async () => {
@@ -144,7 +179,9 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
         const ai = await api.interpret(engine, res.data, user, user.questions?.[0]);
         setInterpretation(ai.interpretation);
       } catch (e) {
-        setInterpretation(IS_CN ? '暂时无法获取解读，请稍后重试。' : 'Unable to get reading now. Please try later.');
+        setInterpretation(
+          IS_CN ? '暂时无法获取解读，请稍后重试。' : 'Unable to get reading now. Please try later.'
+        );
       } finally {
         setLoading(false);
       }
@@ -153,7 +190,12 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
 
   if (loading) {
     return (
-      <SafeAreaView style={[styles.container, { backgroundColor: theme.bg, justifyContent: 'center', alignItems: 'center' }]}>
+      <SafeAreaView
+        style={[
+          styles.container,
+          { backgroundColor: theme.bg, justifyContent: 'center', alignItems: 'center' },
+        ]}
+      >
         <Text style={{ fontSize: 40, marginBottom: 20 }}>{engineInfo?.icon}</Text>
         <Text style={[styles.tagline, { color: theme.textDim }]}>
           {IS_CN ? `${engineInfo?.name}分析中...` : `Analyzing your ${engineInfo?.name}...`}
@@ -169,9 +211,13 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
     <SafeAreaView style={[styles.container, { backgroundColor: theme.bg }]}>
       <View style={styles.resultHeader}>
         <TouchableOpacity onPress={onBack}>
-          <Text style={[styles.backBtn, { color: theme.accent }]}>{IS_CN ? '← 返回' : '← Back'}</Text>
+          <Text style={[styles.backBtn, { color: theme.accent }]}>
+            {IS_CN ? '← 返回' : '← Back'}
+          </Text>
         </TouchableOpacity>
-        <Text style={[styles.resultTitle, { color: theme.text }]}>{engineInfo?.icon} {engineInfo?.name}</Text>
+        <Text style={[styles.resultTitle, { color: theme.text }]}>
+          {engineInfo?.icon} {engineInfo?.name}
+        </Text>
       </View>
 
       <ScrollView style={styles.resultScroll}>
@@ -182,9 +228,7 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
               {IS_CN ? '📊 引擎计算结果' : '📊 Engine Data'} {expanded ? '▾' : '▸'}
             </Text>
             {expanded && result && (
-              <Text style={[styles.monoText, { color: theme.textDim }]}>
-                {result.data}
-              </Text>
+              <Text style={[styles.monoText, { color: theme.textDim }]}>{result.data}</Text>
             )}
             {!expanded && (
               <Text style={[styles.tagline, { color: theme.textDim }]} numberOfLines={2}>
@@ -192,12 +236,15 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
               </Text>
             )}
             {/* 关键指标 */}
-            {result && Object.entries(result.raw).slice(0, 5).map(([k, v]) => (
-              <View key={k} style={styles.metricRow}>
-                <Text style={[styles.metricKey, { color: theme.textDim }]}>{k}</Text>
-                <Text style={[styles.metricVal, { color: theme.text }]}>{String(v)}</Text>
-              </View>
-            ))}
+            {result &&
+              Object.entries(result.raw)
+                .slice(0, 5)
+                .map(([k, v]) => (
+                  <View key={k} style={styles.metricRow}>
+                    <Text style={[styles.metricKey, { color: theme.textDim }]}>{k}</Text>
+                    <Text style={[styles.metricVal, { color: theme.text }]}>{String(v)}</Text>
+                  </View>
+                ))}
           </View>
         </TouchableOpacity>
 
@@ -206,9 +253,7 @@ export const EngineResultScreen: React.FC<EngineResultScreenProps> = ({ engine, 
           <Text style={[styles.cardLabel, { color: theme.accent }]}>
             {IS_CN ? '🤖 AI深度解读' : '🤖 AI Deep Reading'}
           </Text>
-          <Text style={[styles.interpretationText, { color: theme.text }]}>
-            {interpretation}
-          </Text>
+          <Text style={[styles.interpretationText, { color: theme.text }]}>{interpretation}</Text>
         </View>
 
         {/* 免责声明 */}
@@ -256,7 +301,13 @@ const styles = StyleSheet.create({
   dailyText: { fontSize: 16, lineHeight: 24 },
   sectionTitle: { fontSize: 20, fontWeight: 'bold', marginHorizontal: 16, marginVertical: 12 },
   engineGrid: { flexDirection: 'row', flexWrap: 'wrap', paddingHorizontal: 8 },
-  engineCard: { width: (SCREEN_W - 48) / 2, margin: 8, padding: 16, borderRadius: 16, minHeight: 120 },
+  engineCard: {
+    width: (SCREEN_W - 48) / 2,
+    margin: 8,
+    padding: 16,
+    borderRadius: 16,
+    minHeight: 120,
+  },
   engineIcon: { fontSize: 32, marginBottom: 8 },
   engineName: { fontSize: 16, fontWeight: 'bold', marginBottom: 4 },
   engineDesc: { fontSize: 12, lineHeight: 16 },
@@ -266,7 +317,12 @@ const styles = StyleSheet.create({
   memberDaily: { fontSize: 14, marginTop: 4 },
   upgradeBtn: { paddingHorizontal: 20, paddingVertical: 10, borderRadius: 20, marginTop: 12 },
   upgradeText: { color: '#fff', fontSize: 14, fontWeight: '600' },
-  resultHeader: { flexDirection: 'row', alignItems: 'center', paddingHorizontal: 16, paddingVertical: 12 },
+  resultHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+  },
   backBtn: { fontSize: 16 },
   resultTitle: { fontSize: 20, fontWeight: 'bold', marginLeft: 16 },
   resultScroll: { flex: 1 },
@@ -278,7 +334,13 @@ const styles = StyleSheet.create({
   metricVal: { fontSize: 13, fontWeight: '500' },
   interpretationCard: { margin: 16, padding: 16, borderRadius: 16 },
   interpretationText: { fontSize: 15, lineHeight: 24 },
-  disclaimer: { fontSize: 12, textAlign: 'center', paddingHorizontal: 16, paddingBottom: 20, fontStyle: 'italic' },
+  disclaimer: {
+    fontSize: 12,
+    textAlign: 'center',
+    paddingHorizontal: 16,
+    paddingBottom: 20,
+    fontStyle: 'italic',
+  },
 });
 
 export default { HomeScreen, EngineResultScreen };

@@ -8,7 +8,9 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build:web": "vite build",
-    "typecheck": "tsc --noEmit -p tsconfig.web.json"
+    "typecheck": "tsc --noEmit -p tsconfig.json && tsc --noEmit -p tsconfig.web.json",
+    "test": "node scripts/test-contracts.mjs",
+    "verify": "npm run typecheck && npm test"
   },
   "dependencies": {
     "@expo/metro-runtime": "~4.0.1",

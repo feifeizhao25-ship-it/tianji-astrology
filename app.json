@@ -36,7 +36,7 @@
     },
     "extra": {
       "bffMode": "cn",
-      "apiBaseUrl": "http://localhost:3000",
+      "apiBaseUrl": "",
       "eas": {
         "projectId": ""
       }

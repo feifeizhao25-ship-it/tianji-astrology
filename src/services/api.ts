@@ -3,17 +3,33 @@
  * 统一管理所有后端API调用
  */
 
-import { Platform } from 'react-native';
 import Constants from 'expo-constants';
 
 // 环境配置
 const IS_CN = Constants.expoConfig?.extra?.bffMode === 'cn';
-const API_BASE = Constants.expoConfig?.extra?.apiBaseUrl || 'http://localhost:3000';
+const configuredApiBase = String(Constants.expoConfig?.extra?.apiBaseUrl || '').replace(/\/$/, '');
+const API_BASE = configuredApiBase || (__DEV__ ? 'http://localhost:3000' : '');
+
+if (!API_BASE) {
+  throw new Error('生产版未配置 API 服务地址');
+}
 
 // 引擎类型
 export type EngineType =
-  | 'bazi' | 'ziwei' | 'qimen' | 'liuyao' | 'meihua' | 'tarot' | 'name'  // CN
-  | 'western_astro' | 'vedic' | 'tarot_celtic' | 'numerology' | 'rune' | 'palmistry' | 'blood_type'; // GL
+  | 'bazi'
+  | 'ziwei'
+  | 'qimen'
+  | 'liuyao'
+  | 'meihua'
+  | 'tarot'
+  | 'name' // CN
+  | 'western_astro'
+  | 'vedic'
+  | 'tarot_celtic'
+  | 'numerology'
+  | 'rune'
+  | 'palmistry'
+  | 'blood_type'; // GL
 
 export interface UserProfile {
   id: string;
@@ -61,13 +77,21 @@ class ApiClient {
   private async request<T>(path: string, options: RequestInit = {}): Promise<T> {
     const headers: Record<string, string> = {
       'Content-Type': 'application/json',
-      ...options.headers as Record<string, string>,
+      ...(options.headers as Record<string, string>),
     };
     if (this.token) headers['Authorization'] = `Bearer ${this.token}`;
 
     const resp = await fetch(`${this.baseUrl}${path}`, { ...options, headers });
-    if (!resp.ok) throw new Error(`API ${resp.status}: ${await resp.text()}`);
-    return resp.json();
+    const payload = await resp.json().catch(() => null);
+    if (!resp.ok) {
+      const message =
+        payload && typeof payload === 'object' && 'message' in payload
+          ? String(payload.message)
+          : `服务请求失败（${resp.status}）`;
+      throw new Error(message);
+    }
+    if (payload === null) throw new Error('服务返回了无效数据');
+    return payload as T;
   }
 
   // ─── 引擎计算 ───
@@ -93,7 +117,12 @@ class ApiClient {
   }
 
   // ─── AI解读 ───
-  async interpret(engine: string, engineData: string, user: Partial<UserProfile>, question?: string): Promise<{ interpretation: string }> {
+  async interpret(
+    engine: string,
+    engineData: string,
+    user: Partial<UserProfile>,
+    question?: string
+  ): Promise<{ interpretation: string }> {
     return this.request('/v1/agent/interpret', {
       method: 'POST',
       body: JSON.stringify({ engine, engineData, user, question }),
@@ -101,7 +130,12 @@ class ApiClient {
   }
 
   // ─── 交叉验证 ───
-  async crossValidate(engine1: string, data1: string, engine2: string, data2: string): Promise<{ result: string }> {
+  async crossValidate(
+    engine1: string,
+    data1: string,
+    engine2: string,
+    data2: string
+  ): Promise<{ result: string }> {
     return this.request('/v1/agent/cross-validate', {
       method: 'POST',
       body: JSON.stringify({ engine1, data1, engine2, data2 }),
@@ -109,7 +143,10 @@ class ApiClient {
   }
 
   // ─── 对话（AI自我探索伙伴）───
-  async chat(sessionId: string, messages: ChatMessage[]): Promise<{ reply: string; sessionId: string }> {
+  async chat(
+    sessionId: string,
+    messages: ChatMessage[]
+  ): Promise<{ reply: string; sessionId: string }> {
     return this.request('/v1/agent/chat', {
       method: 'POST',
       body: JSON.stringify({ sessionId, messages }),
@@ -129,12 +166,18 @@ class ApiClient {
   }
 
   // ─── 每日提醒 ───
-  async getDailyInsight(userId: string): Promise<{ insight: string; mood: string; rating: number }> {
+  async getDailyInsight(
+    userId: string
+  ): Promise<{ insight: string; mood: string; rating: number }> {
     return this.request(`/v1/daily/${userId}`);
   }
 
   // ─── L3 Skills ───
-  async invokeSkill(skillId: string, user: Partial<UserProfile>, question: string): Promise<{ result: string }> {
+  async invokeSkill(
+    skillId: string,
+    user: Partial<UserProfile>,
+    question: string
+  ): Promise<{ result: string }> {
     return this.request('/v1/skill/invoke', {
       method: 'POST',
       body: JSON.stringify({ skillId, user, question }),
@@ -142,6 +185,25 @@ class ApiClient {
   }
 
   // ─── 用户认证 ───
+  async sendCode(phone: string): Promise<void> {
+    await this.request('/v1/auth/send-code', {
+      method: 'POST',
+      body: JSON.stringify({ phone, countryCode: '+86' }),
+    });
+  }
+
+  async verifyCode(phone: string, code: string): Promise<{ jwt: string; user: UserProfile }> {
+    const response = await this.request<Record<string, unknown>>('/v1/auth/verify-code', {
+      method: 'POST',
+      body: JSON.stringify({ phone, code, countryCode: '+86' }),
+    });
+    const jwt = String(response.jwt || response.access_token || response.accessToken || '');
+    const user = response.user as UserProfile | undefined;
+    if (!jwt || !user?.id) throw new Error('登录响应缺少用户身份或访问凭证');
+    this.setToken(jwt);
+    return { jwt, user };
+  }
+
   async login(provider: string, token: string): Promise<{ jwt: string; user: UserProfile }> {
     const result = await this.request<{ jwt: string; user: UserProfile }>('/v1/auth/login', {
       method: 'POST',
@@ -171,7 +233,12 @@ export const CN_ENGINES: { id: EngineType; name: string; icon: string; descripti
 export const GL_ENGINES: { id: EngineType; name: string; icon: string; description: string }[] = [
   { id: 'western_astro', name: 'Birth Chart', icon: '🌟', description: 'Your cosmic blueprint' },
   { id: 'vedic', name: 'Vedic Reading', icon: '🕉️', description: 'Ancient Indian astrology' },
-  { id: 'tarot_celtic', name: 'Tarot Reading', icon: '🃏', description: 'Celtic Cross 10-card spread' },
+  {
+    id: 'tarot_celtic',
+    name: 'Tarot Reading',
+    icon: '🃏',
+    description: 'Celtic Cross 10-card spread',
+  },
   { id: 'numerology', name: 'Numerology', icon: '🔢', description: 'Your power numbers' },
   { id: 'rune', name: 'Rune Casting', icon: 'ᚱ', description: 'Elder Futhark wisdom' },
   { id: 'palmistry', name: 'Palmistry', icon: '✋', description: 'Read your palm lines' },
@@ -184,14 +251,16 @@ export const ENGINES = IS_CN ? CN_ENGINES : GL_ENGINES;
 // 会员权益
 // ═══════════════════════════════════════════════════════════
 
-export const MEMBERSHIP = IS_CN ? {
-  free: { name: '免费版', daily: 3, price: '¥0', color: '#94a3b8' },
-  premium: { name: '高级版', daily: 20, price: '¥29/月', color: '#3b82f6' },
-  vip: { name: 'VIP尊享', daily: Infinity, price: '¥98/月', color: '#f59e0b' },
-} : {
-  free: { name: 'Free', daily: 3, price: '$0', color: '#94a3b8' },
-  premium: { name: 'Premium', daily: 20, price: '$4.99/mo', color: '#3b82f6' },
-  vip: { name: 'VIP Cosmic', daily: Infinity, price: '$14.99/mo', color: '#f59e0b' },
-};
+export const MEMBERSHIP = IS_CN
+  ? {
+      free: { name: '免费版', daily: 3, price: '¥0', color: '#94a3b8' },
+      premium: { name: '高级版', daily: 20, price: '¥29/月', color: '#3b82f6' },
+      vip: { name: 'VIP尊享', daily: Infinity, price: '¥98/月', color: '#f59e0b' },
+    }
+  : {
+      free: { name: 'Free', daily: 3, price: '$0', color: '#94a3b8' },
+      premium: { name: 'Premium', daily: 20, price: '$4.99/mo', color: '#3b82f6' },
+      vip: { name: 'VIP Cosmic', daily: Infinity, price: '$14.99/mo', color: '#f59e0b' },
+    };
 
 export { IS_CN, API_BASE };

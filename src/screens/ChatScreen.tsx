@@ -5,8 +5,16 @@
  */
 import React, { useState, useRef, useCallback } from 'react';
 import {
-  View, Text, TextInput, TouchableOpacity, FlatList, StyleSheet,
-  KeyboardAvoidingView, Platform, ActivityIndicator, Alert,
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  FlatList,
+  StyleSheet,
+  KeyboardAvoidingView,
+  Platform,
+  ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { api, IS_CN, useTheme, ChatMessage, UserProfile, Theme } from './ThemeContext';
@@ -39,30 +47,43 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({ user, sessionId }) => {
   const [loading, setLoading] = useState(false);
   const flatRef = useRef<FlatList>(null);
 
-  const sendMessage = useCallback(async (text: string) => {
-    if (!text.trim() || loading) return;
-    const userMsg: ChatMessage = { role: 'user', content: text, timestamp: new Date().toISOString() };
-    setMessages(prev => [...prev, userMsg]);
-    setInput('');
-    setLoading(true);
+  const sendMessage = useCallback(
+    async (text: string) => {
+      if (!text.trim() || loading) return;
+      const userMsg: ChatMessage = {
+        role: 'user',
+        content: text,
+        timestamp: new Date().toISOString(),
+      };
+      setMessages((prev) => [...prev, userMsg]);
+      setInput('');
+      setLoading(true);
 
-    try {
-      const allMsgs = [...messages, userMsg];
-      const result = await api.chat(sessionId, allMsgs);
-      const aiMsg: ChatMessage = { role: 'assistant', content: result.reply, timestamp: new Date().toISOString() };
-      setMessages(prev => [...prev, aiMsg]);
-      // 保存到记忆
-      await api.saveMemory(sessionId, [...allMsgs, aiMsg]);
-    } catch {
-      // 离线回退
-      const fallback = IS_CN
-        ? `我理解你的感受。作为你的自我探索伙伴，我建议你先深呼吸，然后我们一起分析。你说的"${text}"，能具体说说吗？`
-        : `I hear you. Let's take a breath and explore this together. Can you tell me more about "${text}"?`;
-      setMessages(prev => [...prev, { role: 'assistant', content: fallback, timestamp: new Date().toISOString() }]);
-    } finally {
-      setLoading(false);
-    }
-  }, [messages, loading, sessionId]);
+      try {
+        const allMsgs = [...messages, userMsg];
+        const result = await api.chat(sessionId, allMsgs);
+        const aiMsg: ChatMessage = {
+          role: 'assistant',
+          content: result.reply,
+          timestamp: new Date().toISOString(),
+        };
+        setMessages((prev) => [...prev, aiMsg]);
+        // 保存到记忆
+        await api.saveMemory(sessionId, [...allMsgs, aiMsg]);
+      } catch {
+        const failure = IS_CN
+          ? '暂时无法连接分析服务，本次没有生成解读。请检查网络后重试。'
+          : 'The analysis service is unavailable. No reading was generated. Check your connection and try again.';
+        setMessages((prev) => [
+          ...prev,
+          { role: 'system', content: failure, timestamp: new Date().toISOString() },
+        ]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [messages, loading, sessionId]
+  );
 
   const suggestions = IS_CN ? SUGGESTED_QUESTIONS_CN : SUGGESTED_QUESTIONS_GL;
 
@@ -71,14 +92,16 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({ user, sessionId }) => {
     return (
       <View style={[msgStyles.row, { flexDirection: isUser ? 'row-reverse' : 'row' }]}>
         {!isUser && <Text style={msgStyles.avatar}>{IS_CN ? '🧘' : '🔮'}</Text>}
-        <View style={[
-          msgStyles.bubble,
-          {
-            backgroundColor: isUser ? theme.accent : theme.cardBg,
-            marginRight: isUser ? 8 : 0,
-            marginLeft: isUser ? 0 : 8,
-          }
-        ]}>
+        <View
+          style={[
+            msgStyles.bubble,
+            {
+              backgroundColor: isUser ? theme.accent : theme.cardBg,
+              marginRight: isUser ? 8 : 0,
+              marginLeft: isUser ? 0 : 8,
+            },
+          ]}
+        >
           <Text style={[msgStyles.text, { color: isUser ? '#fff' : theme.text }]}>
             {item.content}
           </Text>
@@ -90,7 +113,10 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({ user, sessionId }) => {
 
   return (
     <SafeAreaView style={[msgStyles.container, { backgroundColor: theme.bg }]} edges={['bottom']}>
-      <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1 }}>
+      <KeyboardAvoidingView
+        behavior={Platform.OS === 'ios' ? 'padding' : undefined}
+        style={{ flex: 1 }}
+      >
         {/* 消息列表 */}
         <FlatList
           ref={flatRef}
@@ -130,7 +156,9 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({ user, sessionId }) => {
         )}
 
         {/* 输入栏 */}
-        <View style={[msgStyles.inputBar, { backgroundColor: theme.cardBg, borderColor: theme.accent }]}>
+        <View
+          style={[msgStyles.inputBar, { backgroundColor: theme.cardBg, borderColor: theme.accent }]}
+        >
           <TextInput
             style={[msgStyles.input, { color: theme.text }]}
             value={input}
@@ -141,11 +169,18 @@ export const ChatScreen: React.FC<ChatScreenProps> = ({ user, sessionId }) => {
             maxLength={500}
           />
           <TouchableOpacity
-            style={[msgStyles.sendBtn, { backgroundColor: theme.accent, opacity: loading ? 0.5 : 1 }]}
+            style={[
+              msgStyles.sendBtn,
+              { backgroundColor: theme.accent, opacity: loading ? 0.5 : 1 },
+            ]}
             onPress={() => sendMessage(input)}
             disabled={loading || !input.trim()}
           >
-            {loading ? <ActivityIndicator color="#fff" size="small" /> : <Text style={msgStyles.sendIcon}>↑</Text>}
+            {loading ? (
+              <ActivityIndicator color="#fff" size="small" />
+            ) : (
+              <Text style={msgStyles.sendIcon}>↑</Text>
+            )}
           </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
@@ -163,10 +198,31 @@ const msgStyles = StyleSheet.create({
   emptyTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 8, textAlign: 'center' },
   emptyDesc: { fontSize: 14, textAlign: 'center', lineHeight: 20 },
   suggestions: { paddingHorizontal: 16, paddingBottom: 8 },
-  suggestionChip: { paddingHorizontal: 14, paddingVertical: 8, borderRadius: 20, borderWidth: 1, marginHorizontal: 4, marginBottom: 8, alignSelf: 'flex-start' },
+  suggestionChip: {
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1,
+    marginHorizontal: 4,
+    marginBottom: 8,
+    alignSelf: 'flex-start',
+  },
   suggestionText: { fontSize: 13 },
-  inputBar: { flexDirection: 'row', alignItems: 'flex-end', paddingHorizontal: 12, paddingVertical: 8, borderTopWidth: 1 },
+  inputBar: {
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+    paddingHorizontal: 12,
+    paddingVertical: 8,
+    borderTopWidth: 1,
+  },
   input: { flex: 1, fontSize: 15, maxHeight: 80, paddingHorizontal: 12, paddingVertical: 8 },
-  sendBtn: { width: 36, height: 36, borderRadius: 18, justifyContent: 'center', alignItems: 'center', marginLeft: 8 },
+  sendBtn: {
+    width: 36,
+    height: 36,
+    borderRadius: 18,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginLeft: 8,
+  },
   sendIcon: { color: '#fff', fontSize: 20, fontWeight: 'bold' },
 });

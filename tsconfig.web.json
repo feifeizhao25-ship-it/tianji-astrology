@@ -5,5 +5,6 @@
     "moduleResolution": "Bundler",
     "types": ["vite/client"]
   },
-  "include": ["WebApp.tsx", "web-entry.tsx", "vite.config.ts"]
+  "include": ["WebApp.tsx", "web-entry.tsx"],
+  "exclude": ["node_modules", ".expo"]
 }

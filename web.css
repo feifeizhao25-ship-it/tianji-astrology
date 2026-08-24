@@ -184,6 +184,25 @@ input {
   margin: 0;
   color: #f1d8bd !important;
 }
+.consent {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: start;
+  gap: 9px;
+  color: #d8c4b5;
+  font-size: 12px;
+  line-height: 1.7;
+}
+.consent input {
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  accent-color: #b9855c;
+}
+.consent a {
+  color: #f4d3b7;
+  font-weight: 700;
+}
 footer {
   text-align: center;
   padding: 30px;

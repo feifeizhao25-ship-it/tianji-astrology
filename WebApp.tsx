@@ -31,10 +31,12 @@ export default function WebApp() {
   const [code, setCode] = useState('');
   const [notice, setNotice] = useState('');
   const [busy, setBusy] = useState(false);
+  const [accepted, setAccepted] = useState(false);
   const phoneValid = useMemo(() => /^1\d{10}$/.test(phone), [phone]);
 
   async function sendCode() {
     if (!phoneValid) return setNotice('请输入正确的中国大陆手机号');
+    if (!accepted) return setNotice('请先阅读并同意用户协议和隐私政策');
     setBusy(true);
     try {
       await post('/v1/auth/send-code', { phone, countryCode: '+86' });
@@ -48,6 +50,7 @@ export default function WebApp() {
 
   async function login(event: FormEvent) {
     event.preventDefault();
+    if (!accepted) return setNotice('请先阅读并同意用户协议和隐私政策');
     if (!phoneValid || !/^\d{4,6}$/.test(code)) return setNotice('请填写手机号和 4—6 位验证码');
     setBusy(true);
     try {
@@ -138,7 +141,24 @@ export default function WebApp() {
           <p className="notice" role="status">
             {notice}
           </p>
-          <p className="fine">继续即表示你已阅读并同意《用户协议》和《隐私政策》。</p>
+          <label className="consent">
+            <input
+              type="checkbox"
+              checked={accepted}
+              onChange={(event) => setAccepted(event.target.checked)}
+            />
+            <span>
+              我已阅读并同意
+              <a href="/terms.html" target="_blank" rel="noreferrer">
+                《用户协议》
+              </a>
+              和
+              <a href="/privacy.html" target="_blank" rel="noreferrer">
+                《隐私政策》
+              </a>
+              。
+            </span>
+          </label>
         </form>
       </section>
       <footer>© {new Date().getFullYear()} 见己 · 数据来源与更新时间会在分析结果中明确展示</footer>

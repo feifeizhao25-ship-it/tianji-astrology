@@ -13,5 +13,5 @@
     }
   },
   "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules", ".expo", "vite.config.ts"]
+  "exclude": ["node_modules", ".expo", "vite.config.mts", "WebApp.tsx", "web-entry.tsx"]
 }
