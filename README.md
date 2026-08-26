@@ -16,6 +16,9 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-The previous automated feed incorrectly mixed EnergyIQ articles into TianJi. It
-has been removed until the TianJi-only feed passes product and language checks.
+- [Wind Energy Innovations: Latest Turbine Technology in 2026 - New Energy](https://tianji-astrology.com/newenergy/blog/wind-energy-innovations)
+- [Solid-State Batteries: The Next Energy Revolution](https://tianji-astrology.com/newenergy/blog/solid-state-batteries-next-revolution)
+- [Solar Panel ROI Calculator: How Much Can You Save in 2026?](https://tianji-astrology.com/newenergy/blog/solar-panel-roi-calculator-2026)
+- [Solar Cell Efficiency Breakthroughs in 2026 - New Energy](https://tianji-astrology.com/newenergy/blog/solar-efficiency-breakthroughs-2026)
+- [5 Ways Smart Grid Technology is Revolutionizing Energy Distribution](https://tianji-astrology.com/newenergy/blog/smart-grid-technology)
 <!-- BLOG:END -->
