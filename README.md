@@ -11,14 +11,5 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 
 - Canonical web/API/mobile source: [jianji-tianji](https://github.com/feifeizhao25-ship-it/jianji-tianji)
 - Domestic apps: Chinese-first experience; international apps: English-first Western astrology experience
-- Latest source sync: `da76f95` (2026-08-26)
-
-<!-- BLOG:START -->
-## Latest from the blog
-
-- [Wind Energy Innovations: Latest Turbine Technology in 2026 - New Energy](https://tianji-astrology.com/newenergy/blog/wind-energy-innovations)
-- [Solid-State Batteries: The Next Energy Revolution](https://tianji-astrology.com/newenergy/blog/solid-state-batteries-next-revolution)
-- [Solar Panel ROI Calculator: How Much Can You Save in 2026?](https://tianji-astrology.com/newenergy/blog/solar-panel-roi-calculator-2026)
-- [Solar Cell Efficiency Breakthroughs in 2026 - New Energy](https://tianji-astrology.com/newenergy/blog/solar-efficiency-breakthroughs-2026)
-- [5 Ways Smart Grid Technology is Revolutionizing Energy Distribution](https://tianji-astrology.com/newenergy/blog/smart-grid-technology)
-<!-- BLOG:END -->
+- Latest source sync: `35260d0` (2026-08-27)
+- Report export status: real paginated PDF and editable Word output, localized independently for domestic and international users
