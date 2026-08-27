@@ -43,7 +43,7 @@ def blog_entries(xml: str) -> list[tuple[str, str]]:
         if (
             parsed.scheme == "https"
             and (parsed.hostname or "").lower().rstrip(".") == DOMAIN
-            and "/blog/" in parsed.path
+            and parsed.path.startswith("/blog/")
         ):
             entries.append((last_modified, location))
     return sorted(set(entries), reverse=True)[:5]
