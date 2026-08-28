@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": ["vite/client"]
+  },
+  "include": ["WebApp.tsx", "web-entry.tsx"],
+  "exclude": ["node_modules", ".expo"]
+}
