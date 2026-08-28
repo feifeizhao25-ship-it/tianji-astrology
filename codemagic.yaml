@@ -77,3 +77,5 @@ workflows:
         script: cd android && ./gradlew assembleDebug
     artifacts:
       - android/app/build/outputs/**/*.apk
+
+# cache-bust 20260829-0006: refresh codemagic workflow names
