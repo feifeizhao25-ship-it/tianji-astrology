@@ -16,7 +16,7 @@ workflows:
     artifacts:
       - web-build/**/*
   tianji-ios-release:
-    name: TianJi iOS Release (TestFlight)
+    name: TianJi iOS release (TestFlight)
     instance_type: mac_mini_m2
     max_build_duration: 90
     environment:
