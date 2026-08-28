@@ -9,6 +9,8 @@ workflows:
     scripts:
       - name: Install dependencies
         script: npm install --legacy-peer-deps
+      - name: Install web deps
+        script: npx --yes expo install react-dom react-native-web
       - name: Expo export (web)
         script: npx --yes expo export --platform web --output-dir web-build
     artifacts:
