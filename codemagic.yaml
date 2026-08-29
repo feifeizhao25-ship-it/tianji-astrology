@@ -1,4 +1,3 @@
-# Codemagic workflow for TianJi (Expo/React Native)
 workflows:
   tianji-web-export:
     name: TianJi web export smoke
@@ -7,81 +6,44 @@ workflows:
     environment:
       node: 22
     scripts:
-      - name: Install dependencies
-        script: npm install --legacy-peer-deps
-      - name: Install web deps
-        script: npx --yes expo install react-dom react-native-web
-      - name: Expo export (web)
-        script: npx --yes expo export --platform web --output-dir web-build
+    - name: Install dependencies
+      script: npm install --legacy-peer-deps
+    - name: Install web deps
+      script: npx --yes expo install react-dom react-native-web
+    - name: Expo export (web)
+      script: npx --yes expo export --platform web --output-dir web-build
     artifacts:
-      - web-build/**/*
+    - web-build/**/*
   tianji-ios-release:
-    name: TianJi iOS release (TestFlight)
+    name: TianJi Android (prebuild smoke)
     instance_type: mac_mini_m2
-    max_build_duration: 90
+    max_build_duration: 60
     environment:
       node: 22
-      xcode: latest
-      ios_signing:
-        distribution_type: app_store
-        bundle_identifier: com.tianji.jianji
     scripts:
-      - name: Install dependencies
-        script: npm install --legacy-peer-deps
-      - name: Expo prebuild (iOS)
-        script: npx --yes expo prebuild -p ios --no-install
-      - name: Pod install
-        script: cd ios && pod install
-      - name: Build IPA (signed, app_store)
-        script: |-
-          if [ -d ios/app.xcworkspace ]; then
-            xcode-project build-ipa --workspace ios/app.xcworkspace --scheme app
-          else
-            xcode-project build-ipa --project ios/app.xcodeproj --scheme app
-          fi
+    - name: Install dependencies
+      script: npm install --legacy-peer-deps
+    - name: Expo prebuild
+      script: npx --yes expo prebuild -p android --no-install
+    - name: Gradle assemble (debug)
+      script: cd android && ./gradlew assembleDebug
     artifacts:
-      - build/ios/ipa/*.ipa
+    - android/app/build/outputs/**/*.apk
     publishing:
       app_store_connect:
-        api_key: |
-          -----BEGIN PRIVATE KEY-----
+        api_key: '-----BEGIN PRIVATE KEY-----
+
           MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgavKLgqyMZ+VXsBJQ
+
           99Kcuv7ahoq0WQLmrUHf++7RvcugCgYIKoZIzj0DAQehRANCAAR8BUAzmDzuIYho
+
           nPUjPYT4VYF6roXVjQjTzLo+RhagXfxhpgVhabATcfTJt+No0++H1U/re1UE2LjZ
+
           Vq8qAv3M
+
           -----END PRIVATE KEY-----
+
+          '
         key_id: Y3D4ZWF5PT
         issuer_id: 7e1cff65-6556-4b6e-96cc-2c109d39a2a0
         submit_to_testflight: true
-
-    name: TianJi Android (prebuild smoke)
-    instance_type: mac_mini_m2
-    max_build_duration: 60
-    environment:
-      node: 22
-    scripts:
-      - name: Install dependencies
-        script: npm install --legacy-peer-deps
-      - name: Expo prebuild
-        script: npx --yes expo prebuild -p android --no-install
-      - name: Gradle assemble (debug)
-        script: cd android && ./gradlew assembleDebug
-    artifacts:
-      - android/app/build/outputs/**/*.apk
-  tianji-android:
-    name: TianJi Android (prebuild smoke)
-    instance_type: mac_mini_m2
-    max_build_duration: 60
-    environment:
-      node: 22
-    scripts:
-      - name: Install dependencies
-        script: npm install --legacy-peer-deps
-      - name: Expo prebuild
-        script: npx --yes expo prebuild -p android --no-install
-      - name: Gradle assemble (debug)
-        script: cd android && ./gradlew assembleDebug
-    artifacts:
-      - android/app/build/outputs/**/*.apk
-
-# cache-bust 20260829-0006: refresh codemagic workflow names
