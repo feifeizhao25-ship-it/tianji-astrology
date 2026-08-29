@@ -15,35 +15,35 @@ workflows:
     artifacts:
     - web-build/**/*
   tianji-ios-release:
-    name: TianJi Android (prebuild smoke)
+    name: TianJi iOS Release (TestFlight)
     instance_type: mac_mini_m2
     max_build_duration: 60
     environment:
       node: 22
+      xcode: latest
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.tianji.jianji
     scripts:
-    - name: Install dependencies
-      script: npm install --legacy-peer-deps
-    - name: Expo prebuild
-      script: npx --yes expo prebuild -p android --no-install
-    - name: Gradle assemble (debug)
-      script: cd android && ./gradlew assembleDebug
+      - name: Install dependencies
+        script: npm install --legacy-peer-deps
+      - name: Install CocoaPods
+        script: cd ios && pod install
+      - name: Set up code signing settings on Xcode project
+        script: /usr/local/bin/xcode-project use-profiles
+      - name: Build ipa
+        script: xcode-project build-ipa
     artifacts:
-    - android/app/build/outputs/**/*.apk
+      - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        api_key: '-----BEGIN PRIVATE KEY-----
-
+        api_key: |
+          -----BEGIN PRIVATE KEY-----
           MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgavKLgqyMZ+VXsBJQ
-
           99Kcuv7ahoq0WQLmrUHf++7RvcugCgYIKoZIzj0DAQehRANCAAR8BUAzmDzuIYho
-
           nPUjPYT4VYF6roXVjQjTzLo+RhagXfxhpgVhabATcfTJt+No0++H1U/re1UE2LjZ
-
           Vq8qAv3M
-
           -----END PRIVATE KEY-----
-
-          '
         key_id: Y3D4ZWF5PT
         issuer_id: 7e1cff65-6556-4b6e-96cc-2c109d39a2a0
         submit_to_testflight: true
