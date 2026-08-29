@@ -39,11 +39,11 @@ workflows:
       app_store_connect:
         api_key: |
           -----BEGIN PRIVATE KEY-----
-          MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgavKLgqyMZ+VXsBJQ
-          99Kcuv7ahoq0WQLmrUHf++7RvcugCgYIKoZIzj0DAQehRANCAAR8BUAzmDzuIYho
-          nPUjPYT4VYF6roXVjQjTzLo+RhagXfxhpgVhabATcfTJt+No0++H1U/re1UE2LjZ
-          Vq8qAv3M
+          MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgzt5FfV/oAsEdfmER
+          SsieV7VrDccaQW3Q4AyhKcSmRzagCgYIKoZIzj0DAQehRANCAAQTnZQoIyE384gF
+          eIrG7DkRGLD4Hwd4DVPqyswmQcG81lgnUpMC5KDLwcq6G2ukpqtLOaq4KAJJmCK2
+          sGqgtWM4
           -----END PRIVATE KEY-----
-        key_id: Y3D4ZWF5PT
+        key_id: 4AM5KZ79HV
         issuer_id: 7e1cff65-6556-4b6e-96cc-2c109d39a2a0
         submit_to_testflight: true
