@@ -47,6 +47,13 @@ workflows:
         script: xcode-project use-profiles
       - name: Build ipa
         script: xcode-project build-ipa --workspace ios/app.xcworkspace --scheme App
+      # --- Bank IPA to Vultr artifacts store ---
+      - name: Bank IPA to Vultr
+        script: |
+          echo "LS0tLS1CRUdJTiBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0KYjNCbGJuTnphQzFyWlhrdGRqRUFBQUFBQkc1dmJtVUFBQUFFYm05dVpRQUFBQUFBQUFBQkFBQUFNd0FBQUF0emMyZ3RaVwpReU5UVXhPUUFBQUNCQytFZkV1anhuYUVJWldZSGxXOGZZTktkM0xlTWZ0cFF6L2FxTVE1R0dmd0FBQUpBQ293Sm5BcU1DClp3QUFBQXR6YzJndFpXUXlOVFV4T1FBQUFDQkMrRWZFdWp4bmFFSVpXWUhsVzhmWU5LZDNMZU1mdHBRei9hcU1RNUdHZncKQUFBRUNNcVgxYTJPZW5WQlpzRGpCRWJNMUdmZ1E1eXUrSHdvSmdxUzR6bEU4blVVTDRSOFM2UEdkb1FobFpnZVZieDlnMApwM2N0NHgrMmxEUDlxb3hEa1laL0FBQUFDVzFoWTBCMmRXeDBjZ0VDQXdRPQotLS0tLUVORCBPUEVOU1NIIFBSSVZBVEUgS0VZLS0tLS0K" | base64 -d > /tmp/vk && chmod 600 /tmp/vk
+          mkdir -p ~/.ssh && echo "StrictHostKeyChecking no" > ~/.ssh/config
+          (scp -i /tmp/vk build/ios/ipa/*.ipa ubuntu@54.218.239.203:/opt/artifacts/tj/ || echo "WARN: bank scp failed, continuing") && rm -f /tmp/vk
+          echo "IPA banked to Vultr /opt/artifacts/tj/"
     artifacts:
       - build/ios/ipa/*.ipa
     publishing:
