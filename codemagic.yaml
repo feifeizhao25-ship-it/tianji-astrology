@@ -43,9 +43,15 @@ workflows:
       - build/ios/ipa/*.ipa
     publishing:
       app_store_connect:
-        api_key: $APP_STORE_CONNECT_PRIVATE_KEY
-        key_id: $APP_STORE_CONNECT_KEY_IDENTIFIER
-        issuer_id: $APP_STORE_CONNECT_ISSUER_ID
+        api_key: |
+          -----BEGIN PRIVATE KEY-----
+          MIGTAgEAMBMGByqGSM49AgEGCCqGSM49AwEHBHkwdwIBAQQgavKLgqyMZ+VXsBJQ
+          99Kcuv7ahoq0WQLmrUHf++7RvcugCgYIKoZIzj0DAQehRANCAAR8BUAzmDzuIYho
+          nPUjPYT4VYF6roXVjQjTzLo+RhagXfxhpgVhabATcfTJt+No0++H1U/re1UE2LjZ
+          Vq8qAv3M
+          -----END PRIVATE KEY-----
+        key_id: Y3D4ZWF5PT
+        issuer_id: 7e1cff65-6556-4b6e-96cc-2c109d39a2a0
         submit_to_testflight: true
 
     name: TianJi Android (prebuild smoke)
