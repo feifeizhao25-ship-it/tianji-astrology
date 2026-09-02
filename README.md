@@ -11,7 +11,7 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 
 - Canonical web/API/mobile source: [jianji-tianji](https://github.com/feifeizhao25-ship-it/jianji-tianji)
 - Domestic apps: Chinese-first experience; international apps: English-first Western astrology experience
-- Latest verified canonical source: `e038709` (2026-08-31)
+- Latest verified canonical source: `395aad5` (2026-09-03)
 - Report export status: real paginated PDF and editable Word output, localized independently for domestic and international users
 <!-- BLOG:START -->
 ## Latest from the blog
