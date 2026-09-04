@@ -16,9 +16,9 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [New Moon in Libra October 2026: Fresh Starts in Love and Balance](https://tianji-astrology.com/blog/tianji-new-moon-libra-october-2026.html)
-- [Zodiacal Releasing: Ancient Timing Technique](https://tianji-astrology.com/blog/zodiacal-releasing)
-- [Zodiac Stress Relief: How Each Sign Handles Stress & Best Relaxation Techniques](https://tianji-astrology.com/blog/zodiac-stress-relief)
-- [Zodiac Home Decor: Interior Design and Styling Tips for Each Sign](https://tianji-astrology.com/blog/zodiac-home-decor)
-- [Zodiac Gift Guide: Best Gift Ideas for Every Zodiac Sign](https://tianji-astrology.com/blog/zodiac-gift-guide)
+- [Zodiacal Releasing: Ancient Timing Technique](https://tianji-astrology.com/blog/zodiacal-releasing.html)
+- [Zodiac Stress Relief: How Each Sign Handles Stress & Best Relaxation Techniques](https://tianji-astrology.com/blog/zodiac-stress-relief.html)
+- [Zodiac Home Decor: Interior Design and Styling Tips for Each Sign](https://tianji-astrology.com/blog/zodiac-home-decor.html)
+- [Zodiac Gift Guide: Best Gift Ideas for Every Zodiac Sign](https://tianji-astrology.com/blog/zodiac-gift-guide.html)
+- [Zodiac Elements & Qualities: Fire, Earth, Air, Water × Cardinal, Fixed, Mutable](https://tianji-astrology.com/blog/zodiac-elements-qualities.html)
 <!-- BLOG:END -->
