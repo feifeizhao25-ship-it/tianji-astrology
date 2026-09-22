@@ -16,9 +16,5 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Zodiacal Releasing: Ancient Timing Technique](https://tianji-astrology.com/blog/zodiacal-releasing.html)
-- [Zodiac Stress Relief: How Each Sign Handles Stress & Best Relaxation Techniques](https://tianji-astrology.com/blog/zodiac-stress-relief.html)
-- [Zodiac Home Decor: Interior Design and Styling Tips for Each Sign](https://tianji-astrology.com/blog/zodiac-home-decor.html)
-- [Zodiac Gift Guide: Best Gift Ideas for Every Zodiac Sign](https://tianji-astrology.com/blog/zodiac-gift-guide.html)
-- [Zodiac Elements & Qualities: Fire, Earth, Air, Water × Cardinal, Fixed, Mutable](https://tianji-astrology.com/blog/zodiac-elements-qualities.html)
+- [Uranus in Gemini 2026: The Great Awakening Transit](https://tianji-astrology.com/blog/uranus-in-gemini-2026-awakening-transit.html)
 <!-- BLOG:END -->
