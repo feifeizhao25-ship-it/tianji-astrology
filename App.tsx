@@ -12,10 +12,11 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { api, EngineType, UserProfile } from './src/services/api';
 import { HomeScreen, EngineResultScreen } from './src/screens';
 import { ChatScreen } from './src/screens/ChatScreen';
+import { ChartScreen } from './src/screens/ChartScreen';
 
 type Tab = 'home' | 'chat';
 
-function LoginScreen({ onLogin }: { onLogin: (user: UserProfile) => void }) {
+function LoginScreen({ onLogin, onFreeChart }: { onLogin: (user: UserProfile) => void; onFreeChart: () => void }) {
   const [phone, setPhone] = useState('');
   const [code, setCode] = useState('');
   const [busy, setBusy] = useState(false);
@@ -82,6 +83,9 @@ function LoginScreen({ onLogin }: { onLogin: (user: UserProfile) => void }) {
             <Text style={styles.primaryText}>登录 / 注册</Text>
           )}
         </TouchableOpacity>
+        <TouchableOpacity style={styles.secondaryButton} onPress={onFreeChart}>
+          <Text style={styles.secondaryText}>Free Chart (no login)</Text>
+        </TouchableOpacity>
         <Text accessibilityLiveRegion="polite" style={styles.notice}>
           {notice}
         </Text>
@@ -122,10 +126,17 @@ function AuthenticatedApp({ user }: { user: UserProfile }) {
 
 export default function App() {
   const [user, setUser] = useState<UserProfile | null>(null);
+  const [freeChart, setFreeChart] = useState(false);
   return (
     <SafeAreaProvider>
       <StatusBar style="dark" />
-      {user ? <AuthenticatedApp user={user} /> : <LoginScreen onLogin={setUser} />}
+      {freeChart ? (
+        <ChartScreen onBack={() => setFreeChart(false)} />
+      ) : user ? (
+        <AuthenticatedApp user={user} />
+      ) : (
+        <LoginScreen onLogin={setUser} onFreeChart={() => setFreeChart(true)} />
+      )}
     </SafeAreaProvider>
   );
 }
