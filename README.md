@@ -16,5 +16,5 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Uranus in Gemini 2026: The Great Awakening Transit](https://tianji-astrology.com/blog/uranus-in-gemini-2026-awakening-transit.html)
+- [Jupiter in Cancer 2026 Transit: Abundance by House](https://tianji-astrology.com/blog/jupiter-in-cancer-2026-transit.html)
 <!-- BLOG:END -->
