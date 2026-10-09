@@ -16,5 +16,5 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Jupiter in Cancer 2026 Transit: Abundance by House](https://tianji-astrology.com/blog/jupiter-in-cancer-2026-transit.html)
+- [Pluto in Aquarius Transit Guide for Every Zodiac Sign](https://tianji-astrology.com/blog/pluto-in-aquarius-2026-transit.html)
 <!-- BLOG:END -->
