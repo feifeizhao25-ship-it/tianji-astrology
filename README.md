@@ -16,5 +16,8 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Pluto in Aquarius Transit Guide for Every Zodiac Sign](https://tianji-astrology.com/blog/pluto-in-aquarius-2026-transit.html)
+- [Venus in Capricorn 2026 Transit: Love, Money and Ambition](https://tianji-astrology.com/blog/venus-in-capricorn-2026-transit.html)
+- [Mars in Capricorn 2026: Ambition, Discipline, and Your Chart](https://tianji-astrology.com/blog/tianji-mars-in-capricorn-2026.html)
+- [Mercury Retrograde Autumn 2026: What It Means and How to Work With It](https://tianji-astrology.com/blog/mercury-retrograde-autumn-2026.html)
+- [Saturn Square Neptune 2026: Balancing Structure and Dreams](https://tianji-astrology.com/blog/saturn-neptune-2026-transit-guide.html)
 <!-- BLOG:END -->
