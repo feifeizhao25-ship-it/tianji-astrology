@@ -16,8 +16,9 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Venus in Capricorn 2026 Transit: Love, Money and Ambition](https://tianji-astrology.com/blog/venus-in-capricorn-2026-transit.html)
-- [Mars in Capricorn 2026: Ambition, Discipline, and Your Chart](https://tianji-astrology.com/blog/tianji-mars-in-capricorn-2026.html)
-- [Mercury Retrograde Autumn 2026: What It Means and How to Work With It](https://tianji-astrology.com/blog/mercury-retrograde-autumn-2026.html)
-- [Saturn Square Neptune 2026: Balancing Structure and Dreams](https://tianji-astrology.com/blog/saturn-neptune-2026-transit-guide.html)
+- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-mars-synastry-chemistry)
+- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-in-scorpio-2026-transit)
+- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-in-sagittarius-2026-transit)
+- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-in-capricorn-2026-transit)
+- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/uranus-in-gemini-2026-awakening-transit)
 <!-- BLOG:END -->
