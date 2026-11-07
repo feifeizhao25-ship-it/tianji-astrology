@@ -16,9 +16,5 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-mars-synastry-chemistry)
-- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-in-scorpio-2026-transit)
-- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-in-sagittarius-2026-transit)
-- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/venus-in-capricorn-2026-transit)
-- [TianJi — Western Astrology, Decoded by AI](https://tianji-astrology.com/blog/uranus-in-gemini-2026-awakening-transit)
+- [Sidereal vs Tropical Zodiac: What Changed in 2026 (and Why Apps Disagree)](https://tianji-astrology.com/blog/sidereal-vs-tropical-zodiac-2026.html)
 <!-- BLOG:END -->
