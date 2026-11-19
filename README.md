@@ -16,5 +16,5 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Sidereal vs Tropical Zodiac: What Changed in 2026 (and Why Apps Disagree)](https://tianji-astrology.com/blog/sidereal-vs-tropical-zodiac-2026.html)
+- [Saturn in Aries 2026: A House-by-House Timing Guide](https://tianji-astrology.com/blog/saturn-in-aries-2026-transit-guide.html)
 <!-- BLOG:END -->
