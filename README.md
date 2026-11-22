@@ -16,5 +16,9 @@ AI-powered Western astrology: natal chart decoding, daily transit guidance, plai
 <!-- BLOG:START -->
 ## Latest from the blog
 
-- [Saturn in Aries 2026: A House-by-House Timing Guide](https://tianji-astrology.com/blog/saturn-in-aries-2026-transit-guide.html)
+- [Natal Jupiter in Leo: The Growth Story in Your Birth Chart](https://tianji-astrology.com/blog/jupiter-in-leo-natal-chart-guide.html)
+- [Venus in Your Natal Chart: How It Shapes Love and Attraction](https://tianji-astrology.com/blog/venus-natal-chart-love-guide.html)
+- [Venus-Mars Synastry: Reading Chemistry Between Two Charts](https://tianji-astrology.com/blog/venus-mars-synastry-chemistry.html)
+- [Venus in Scorpio 2026: Dates, Meaning, and How to Work the Transit](https://tianji-astrology.com/blog/venus-in-scorpio-2026-transit.html)
+- [Venus in Sagittarius 2026 Transit: Love, Money and Optimism](https://tianji-astrology.com/blog/venus-in-sagittarius-2026-transit.html)
 <!-- BLOG:END -->
